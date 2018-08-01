@@ -57,7 +57,7 @@ namespace Soket_Server
         private static void ReceiveCallback(IAsyncResult AR)
         {
            
-
+            
             Socket socket = (Socket)AR.AsyncState;
             int received = socket.EndReceive(AR);
             byte[] dataBuf = new byte[received];
@@ -73,6 +73,11 @@ namespace Soket_Server
                     break;
                 case 2:
                     response = Group_State.waiting.ToString();
+                    break;
+                case 3:
+                    response = "Generating Key...";
+                    timer1.Interval = 1000;
+                    timer1.Start();
                     break;
                 default:
                     
@@ -96,6 +101,7 @@ namespace Soket_Server
 
 
         }
+
 
         private static void SendCallBack(IAsyncResult AR)
         {
