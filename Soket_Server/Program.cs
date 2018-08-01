@@ -10,9 +10,9 @@ namespace Soket_Server
 {
     class Program
     {
-        enum Group_State
+        public enum Group_State
         {
-            waiting = 0,
+            waiting = 2,
             busy = 1 
         }
 
@@ -56,11 +56,7 @@ namespace Soket_Server
         }
         private static void ReceiveCallback(IAsyncResult AR)
         {
-            Groups grup1 = new Groups();
-            grup1.Group_state = "waiting";
-
-            Groups grup2 = new Groups();
-            grup2.Group_state = "busy";
+           
 
             Socket socket = (Socket)AR.AsyncState;
             int received = socket.EndReceive(AR);
@@ -70,36 +66,30 @@ namespace Soket_Server
             Console.WriteLine("Alınan Mesaj " + text);
 
             string response = string.Empty;
-            /*if(Convert.ToInt16(text) == Group_State.busy)
+            switch (Convert.ToInt32(text))
             {
-              
-            }*/
+                case 1:
+                   response= Group_State.busy.ToString();
+                    break;
+                case 2:
+                    response = Group_State.waiting.ToString();
+                    break;
+                default:
+                    
+                        Console.Write("Server : ");
+                        string req = Console.ReadLine();
 
-            if (text == "1")
-            {
-                response = Group_State.busy.ToString();
+
+
+                        byte[] buffer = Encoding.ASCII.GetBytes(req);
+                        socket.Send(buffer);
+                         byte[] receivedBuf = new byte[1024];
+                    
+                    break;
+
             }
-            if(text == "2")
-            {
-                response = Group_State.waiting.ToString(); ;
-
-            }
-            else
-            {
-                Console.Write("Server : ");
-                string req = Console.ReadLine();
-
-                
-                
-             byte[] buffer = Encoding.ASCII.GetBytes(req);
-             socket.Send(buffer);
-                
-
-               
-
-
-                byte[] receivedBuf = new byte[1024];
-            }
+           
+            
             byte[] data = Encoding.ASCII.GetBytes(response);
             socket.BeginSend(data, 0, data.Length, SocketFlags.None, new AsyncCallback(SendCallBack), socket);
             socket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), socket);
@@ -116,11 +106,7 @@ namespace Soket_Server
         
 
         }
-        struct Groups
-        {
-        public string Group_state;
         
-        }
     
     
     
