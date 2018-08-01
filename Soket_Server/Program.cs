@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net.Sockets;
 using System.Net;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace Soket_Server
         enum Group_State
         {
             waiting = 0,
-            busy = 2 
+            busy = 1 
         }
 
         private static byte[] _buffer = new byte[1024];
