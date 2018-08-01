@@ -16,6 +16,8 @@ namespace Soket_Server
             busy = 1 
         }
 
+        // TODO - Test
+
         private static byte[] _buffer = new byte[1024];
         private static List<Socket> _clientSockets = new List<Socket>();        
         private static Socket _serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
