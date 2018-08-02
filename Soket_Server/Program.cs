@@ -12,8 +12,10 @@ namespace Soket_Server
     {
         public enum Group_State
         {
-            waiting = 2,
-            busy = 1 
+           busy = 3,
+           waiting = 4,
+           group_1 = 1,
+           group_2 = 2
         }
 
         // TODO - Test
@@ -69,16 +71,38 @@ namespace Soket_Server
             switch (Convert.ToInt32(text))
             {
                 case 1:
-                   response= Group_State.busy.ToString();
+                    if (Group_State.group_1 == Group_State.busy)
+                    {
+
+                        response = "BUSY";
+
+                    }
+                    else
+                        response = "WAITING";
+                    
                     break;
                 case 2:
-                    response = Group_State.waiting.ToString();
+                    if (Group_State.group_1 == Group_State.busy)
+                    {
+
+                        response = "BUSY";
+
+                    }
+                    else
+                        response = "WAITING";
+                    
+
+                   /* while (true)
+                    {
+                    Console.Write("Key Oluşturuluyor...");
+
+                    }*/
+                    
                     break;
-                case 3:
+              /*  case 3:
                     response = "Generating Key...";
-                    timer1.Interval = 1000;
-                    timer1.Start();
-                    break;
+                   
+                    break;*/
                 default:
                     
                         Console.Write("Server : ");
@@ -93,6 +117,8 @@ namespace Soket_Server
                     break;
 
             }
+
+            
            
             
             byte[] data = Encoding.ASCII.GetBytes(response);
@@ -101,6 +127,9 @@ namespace Soket_Server
 
 
         }
+        
+      
+
 
 
         private static void SendCallBack(IAsyncResult AR)
